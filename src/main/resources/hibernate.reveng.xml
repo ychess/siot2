@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+    <schema-selection match-catalog="siotdb"/>
+    <table-filter match-name="cdorm"/>
+    <table-filter match-name="coordinator"/>
+    <table-filter match-name="delivery"/>
+    <table-filter match-name="device"/>
+    <table-filter match-name="log"/>
+    <table-filter match-name="profile"/>
+    <table-filter match-name="ucorm"/>
+    <table-filter match-name="user"/>
+</hibernate-reverse-engineering>
