@@ -14,6 +14,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ * 通用数据持久层接口实现
+ *
+ * @author gugia
+ * @param <T> com.xkt.siot.domain中的类型
+ */
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
     /* DAO组件进行持久化操作底层依赖的SessionFactory组件 */

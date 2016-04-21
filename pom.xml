@@ -34,6 +34,8 @@
         <hibernate.ver>5.1.0.Final</hibernate.ver>
         <!--mysql Don't upgrade to 6.x unless Mysql server version is 6.x-->
         <mysql-connector-java.ver>5.1.38</mysql-connector-java.ver>
+        <!--druid from alibaba-->
+        <druid.ver>1.0.17</druid.ver>
         <!--shiro-->
         <shiro.ver>1.2.4</shiro.ver>
         <!--jstl-->
@@ -110,6 +112,11 @@
             <version>${mysql-connector-java.ver}</version>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.ver}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>${shiro.ver}</version>
@@ -138,8 +145,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.ver}</version>
                 <configuration>
-                    <source>${maven-source.version}</source>
-                    <target>${maven-source.version}</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
