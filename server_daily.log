@@ -1,0 +1,106 @@
+2016-04-25 14:19:10,648 - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2016-04-25 14:19:10,686 - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5f9d02cb, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@63753b6d, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@6b09bb57, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6536e911, org.springframework.test.context.transaction.TransactionalTestExecutionListener@520a3426, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@18eed359]
+2016-04-25 14:19:10,786 - Loading XML bean definitions from class path resource [siot.springframework.xml]
+2016-04-25 14:19:11,072 - Refreshing org.springframework.context.support.GenericApplicationContext@3fd7a715: startup date [Mon Apr 25 14:19:11 CST 2016]; root of context hierarchy
+2016-04-25 14:19:11,171 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2016-04-25 14:19:11,551 - HHH000412: Hibernate Core {5.1.0.Final}
+2016-04-25 14:19:11,551 - HHH000206: hibernate.properties not found
+2016-04-25 14:19:11,570 - HHH000021: Bytecode provider name : javassist
+2016-04-25 14:19:11,635 - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+2016-04-25 14:19:11,979 - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2016-04-25 14:19:12,211 - {dataSource-1} inited
+2016-04-25 14:19:12,496 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2016-04-25 14:19:13,726 - Using DataSource [{
+	CreateTime:"2016-04-25 14:19:11",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:1,
+	ConnectCount:1,
+	Connections:[
+		{ID:435175610, ConnectTime:"2016-04-25 14:19:12", UseCount:1, LastActiveTime:"2016-04-25 14:19:12"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+2016-04-25 14:19:14,018 - Began transaction (1) for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@1d782abe, testMethod = create@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate5.HibernateTransactionManager@6df7988f]; rollback [true]
+2016-04-25 14:19:14,101 - 我被调用
+2016-04-25 14:19:14,205 - 创建用户的ID为：143
+2016-04-25 14:19:14,216 - Rolled back transaction for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@1d782abe, testMethod = create@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]].
+2016-04-25 14:19:14,224 - Began transaction (1) for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@44c5a16f, testMethod = findByValueAndPage@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate5.HibernateTransactionManager@6df7988f]; rollback [true]
+2016-04-25 14:19:14,225 - 我被调用
+2016-04-25 14:19:14,338 - 共找到 20 位用户
+2016-04-25 14:19:14,362 - admin
+2016-04-25 14:19:14,363 - xb7mz21pg7
+2016-04-25 14:19:14,363 - px7fe42
+2016-04-25 14:19:14,363 - kg92m2x
+2016-04-25 14:19:14,364 - 0hqegfswtye
+2016-04-25 14:19:14,364 - 9i4ugkbuuh
+2016-04-25 14:19:14,364 - xwt2v2
+2016-04-25 14:19:14,365 - blie0
+2016-04-25 14:19:14,365 - ebgtfuaw
+2016-04-25 14:19:14,365 - d8jdu4kg
+2016-04-25 14:19:14,365 - w734g3vpg
+2016-04-25 14:19:14,366 - 2cn9no702g1
+2016-04-25 14:19:14,366 - mrd187ynii
+2016-04-25 14:19:14,366 - rgtbkhuujm
+2016-04-25 14:19:14,366 - 3d3a34pf
+2016-04-25 14:19:14,366 - xjg96tws635
+2016-04-25 14:19:14,366 - ewr0y6xk4br
+2016-04-25 14:19:14,367 - 0o6dqei
+2016-04-25 14:19:14,367 - yketka2
+2016-04-25 14:19:14,367 - 9qrq85f
+2016-04-25 14:19:14,374 - Rolled back transaction for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@44c5a16f, testMethod = findByValueAndPage@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]].
+2016-04-25 14:19:14,413 - Closing org.springframework.context.support.GenericApplicationContext@3fd7a715: startup date [Mon Apr 25 14:19:11 CST 2016]; root of context hierarchy
+2016-04-25 14:19:14,427 - {dataSource-1} closed
+2016-04-25 14:19:54,942 - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2016-04-25 14:19:54,957 - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5f9d02cb, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@63753b6d, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@6b09bb57, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6536e911, org.springframework.test.context.transaction.TransactionalTestExecutionListener@520a3426, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@18eed359]
+2016-04-25 14:19:55,073 - Loading XML bean definitions from class path resource [siot.springframework.xml]
+2016-04-25 14:19:55,427 - Refreshing org.springframework.context.support.GenericApplicationContext@3fd7a715: startup date [Mon Apr 25 14:19:55 CST 2016]; root of context hierarchy
+2016-04-25 14:19:55,528 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2016-04-25 14:19:55,875 - HHH000412: Hibernate Core {5.1.0.Final}
+2016-04-25 14:19:55,875 - HHH000206: hibernate.properties not found
+2016-04-25 14:19:55,875 - HHH000021: Bytecode provider name : javassist
+2016-04-25 14:19:55,913 - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+2016-04-25 14:19:56,114 - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2016-04-25 14:19:56,298 - {dataSource-1} inited
+2016-04-25 14:19:56,617 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2016-04-25 14:19:57,972 - Using DataSource [{
+	CreateTime:"2016-04-25 14:19:55",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:1,
+	ConnectCount:1,
+	Connections:[
+		{ID:435175610, ConnectTime:"2016-04-25 14:19:56", UseCount:1, LastActiveTime:"2016-04-25 14:19:56"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+2016-04-25 14:19:58,126 - Began transaction (1) for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@1d782abe, testMethod = create@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate5.HibernateTransactionManager@6df7988f]; rollback [true]
+2016-04-25 14:19:58,241 - 创建用户的ID为：144
+2016-04-25 14:19:58,241 - Rolled back transaction for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@1d782abe, testMethod = create@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]].
+2016-04-25 14:19:58,241 - Began transaction (1) for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@44c5a16f, testMethod = findByValueAndPage@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate5.HibernateTransactionManager@6df7988f]; rollback [true]
+2016-04-25 14:19:58,288 - 共找到 20 位用户
+2016-04-25 14:19:58,303 - admin
+2016-04-25 14:19:58,303 - xb7mz21pg7
+2016-04-25 14:19:58,303 - px7fe42
+2016-04-25 14:19:58,303 - kg92m2x
+2016-04-25 14:19:58,303 - 0hqegfswtye
+2016-04-25 14:19:58,303 - 9i4ugkbuuh
+2016-04-25 14:19:58,303 - xwt2v2
+2016-04-25 14:19:58,303 - blie0
+2016-04-25 14:19:58,303 - ebgtfuaw
+2016-04-25 14:19:58,303 - d8jdu4kg
+2016-04-25 14:19:58,303 - w734g3vpg
+2016-04-25 14:19:58,303 - 2cn9no702g1
+2016-04-25 14:19:58,303 - mrd187ynii
+2016-04-25 14:19:58,319 - rgtbkhuujm
+2016-04-25 14:19:58,319 - 3d3a34pf
+2016-04-25 14:19:58,319 - xjg96tws635
+2016-04-25 14:19:58,319 - ewr0y6xk4br
+2016-04-25 14:19:58,319 - 0o6dqei
+2016-04-25 14:19:58,319 - yketka2
+2016-04-25 14:19:58,319 - 9qrq85f
+2016-04-25 14:19:58,319 - Rolled back transaction for test context [DefaultTestContext@54da32dc testClass = UserServiceTest, testInstance = com.xkt.siot.test.service.UserServiceTest@44c5a16f, testMethod = findByValueAndPage@UserServiceTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2234078 testClass = UserServiceTest, locations = '{classpath:siot.springframework.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]].
+2016-04-25 14:19:58,341 - Closing org.springframework.context.support.GenericApplicationContext@3fd7a715: startup date [Mon Apr 25 14:19:55 CST 2016]; root of context hierarchy
+2016-04-25 14:19:58,372 - {dataSource-1} closed
