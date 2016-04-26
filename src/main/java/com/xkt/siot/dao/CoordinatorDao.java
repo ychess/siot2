@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * 用户数据访问接口实现
  *
  * @author gugia
- * @param <T> 用户类
+ * @param <Coordinator> 主节点类
  */
 @Repository
-public class UserDao<T> extends BaseDaoImpl<T> {
+public class CoordinatorDao<Coordinator> extends BaseDaoImpl<Coordinator> {
 
 }

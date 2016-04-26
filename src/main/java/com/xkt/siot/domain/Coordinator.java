@@ -26,7 +26,7 @@ public class Coordinator implements java.io.Serializable {
     private Integer id;
     private String eui;
     private String ver;
-    private byte status;
+    private int status;
     private String description;
     private Date updatetime;
     private Date rectime;
@@ -34,13 +34,13 @@ public class Coordinator implements java.io.Serializable {
     public Coordinator() {
     }
 
-    public Coordinator(String eui, String ver, byte status) {
+    public Coordinator(String eui, String ver, int status) {
         this.eui = eui;
         this.ver = ver;
         this.status = status;
     }
 
-    public Coordinator(String eui, String ver, byte status, String description, Date updatetime, Date rectime) {
+    public Coordinator(String eui, String ver, int status, String description, Date updatetime, Date rectime) {
         this.eui = eui;
         this.ver = ver;
         this.status = status;
@@ -80,11 +80,11 @@ public class Coordinator implements java.io.Serializable {
     }
 
     @Column(name = "status", nullable = false)
-    public byte getStatus() {
+    public int getStatus() {
         return this.status;
     }
 
-    public void setStatus(byte status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
