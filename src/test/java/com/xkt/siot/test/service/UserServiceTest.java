@@ -6,12 +6,17 @@ package com.xkt.siot.test.service;
 
 import com.xkt.siot.domain.User;
 import com.xkt.siot.service.UserService;
+import com.xkt.siot.shiro.SiotCryptFormat;
+import com.xkt.siot.shiro.UserPasswordService;
 import com.xkt.siot.test.BaseTest;
+import com.xkt.siot.utils.RandomUserGenerator;
 import java.util.List;
 import javax.annotation.Resource;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.annotation.Rollback;
 
 /**
  * 用户服务测试
@@ -24,12 +29,25 @@ public class UserServiceTest extends BaseTest {
 
     @Resource
     UserService userService;
+    @Resource
+    UserPasswordService passwordService;
+    @Resource
+    RandomUserGenerator randomUserGenerator;
 
     @Test
+    @Rollback(true)
     public void create() {
-        User user = new User("mama", "123");
+        User user = new User("gugia", "123");
         int id = userService.create(user);
         logger.info("创建用户的ID为：{}", id);
+    }
+
+    @Test
+    @Rollback(true)
+    public void createMore() {
+        for (int i = 0; i < 30; i++) {
+            userService.create(randomUserGenerator.getRandomUser());
+        }
     }
 
     @Test
@@ -41,7 +59,19 @@ public class UserServiceTest extends BaseTest {
             logger.info("共找到 {} 位用户", users.size());
         }
         users.stream().forEach((User user) -> {
-            logger.info(user.getUsername());
+            logger.debug(user.getUsername());
         });
+    }
+
+    @Test
+    public void password() {
+        String e1 = passwordService.encryptPassword("123");
+        logger.info("密码加密后为 {}", e1);
+        logger.info("密码匹配结果 {}", passwordService.passwordsMatch("123", e1));
+        DefaultPasswordService defaultPasswordService = new DefaultPasswordService();
+        defaultPasswordService.setHashFormat(new SiotCryptFormat());
+        String e2 = defaultPasswordService.encryptPassword("123");
+        logger.info("密码加密后为 {}", e2);
+        logger.info("密码匹配结果 {}", defaultPasswordService.passwordsMatch("123", e2));
     }
 }

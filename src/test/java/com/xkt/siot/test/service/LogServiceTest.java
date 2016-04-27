@@ -47,9 +47,9 @@ public class LogServiceTest extends BaseTest {
             }
         }
         List<Log> logs = logService.findByUserId(uid, 20, 1);
-        logger.info("通过logService找到 {} 条日志", logs.size());
+        logger.info("通过logService找到 {} 条日志，分别为：", logs.size());
         logs.stream().forEach((Log log) -> {
-            logger.info(log.getId().toString());
+            logger.info("日志 ID {}", log.getId());
         });
     }
 }

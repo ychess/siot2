@@ -15,4 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDao<T> extends BaseDaoImpl<T> {
 
+    public void updatePassword(int id, String password) {
+        update("update User e set e.password='" + password + "' where e.id=" + id);
+    }
 }

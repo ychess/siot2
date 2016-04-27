@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Configuration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:siot.springframework.xml")
+@ContextConfiguration(locations = "classpath:siot.root.xml")
 @Transactional
 public abstract class BaseTest {
 }

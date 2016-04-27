@@ -31,7 +31,7 @@
         <!--Spring Framework-->
         <springframework.ver>4.2.5.RELEASE</springframework.ver>
         <!--Hibernate-->
-        <hibernate.ver>5.1.0.Final</hibernate.ver>
+        <hibernate.ver>4.3.11.Final</hibernate.ver>
         <!--mysql Don't upgrade to 6.x unless Mysql server version is 6.x-->
         <mysql-connector-java.ver>5.1.38</mysql-connector-java.ver>
         <!--druid from alibaba-->
