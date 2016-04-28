@@ -25,13 +25,7 @@
         <link href="${bootstrapCss}" rel="stylesheet" />
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">IoT platform</a>
-                </div>
-            </div>
-        </nav>
+        <%@include file="../jspf/navbar.jspf"%>
         <form class="form-signin" action="" method="post">
             <h2 class="form-signin-heading">登录</h2>
             <label for="username" class="sr-only">用户名</label>

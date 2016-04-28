@@ -4,7 +4,6 @@
  */
 package com.xkt.siot.controller;
 
-import com.xkt.siot.domain.User;
 import com.xkt.siot.service.UserService;
 import com.xkt.siot.shiro.UserPasswordService;
 import javax.annotation.Resource;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -29,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author L.X <gugia@qq.com>
  */
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource

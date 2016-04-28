@@ -38,8 +38,12 @@
         <druid.ver>1.0.17</druid.ver>
         <!--shiro-->
         <shiro.ver>1.2.4</shiro.ver>
+        <!--mina-->
+        <mina.ver>2.0.13</mina.ver>
         <!--jstl-->
         <jstl.ver>1.2</jstl.ver>
+        <!--gson-->
+        <gson.ver>2.5</gson.ver>
     </properties>
     
     <dependencies>
@@ -132,9 +136,19 @@
             <version>${shiro.ver}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+            <version>${mina.ver}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.ver}</version>
         </dependency>
     </dependencies>
 

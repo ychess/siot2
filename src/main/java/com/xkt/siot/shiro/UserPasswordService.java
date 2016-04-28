@@ -15,6 +15,7 @@ import org.apache.shiro.crypto.hash.format.HashFormatFactory;
 import org.apache.shiro.crypto.hash.format.ParsableHashFormat;
 import org.apache.shiro.crypto.hash.format.Shiro1CryptFormat;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.SimpleByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class UserPasswordService implements HashingPasswordService {
 
     private final Logger logger = LoggerFactory.getLogger(UserPasswordService.class);
+    private static final String SALT = "black";
 
     public static final String ALGORITHM = "SHA-256";
     public static final int ITERATIONS = 10000;
@@ -43,8 +45,8 @@ public class UserPasswordService implements HashingPasswordService {
         defaultHashService.setHashAlgorithmName(ALGORITHM);
         defaultHashService.setHashIterations(ITERATIONS);
         defaultHashService.setGeneratePublicSalt(true); //always want generated salts for user passwords to be most secure
+        defaultHashService.setPrivateSalt(new SimpleByteSource(SALT));
         this.hashService = defaultHashService;
-//        this.hashFormat = new SiotCryptFormat();
         this.hashFormat = new Shiro1CryptFormat();
         this.hashFormatFactory = new DefaultHashFormatFactory();
     }

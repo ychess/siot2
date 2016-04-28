@@ -6,13 +6,13 @@ package com.xkt.siot.test.service;
 
 import com.xkt.siot.domain.User;
 import com.xkt.siot.service.UserService;
-import com.xkt.siot.shiro.SiotCryptFormat;
 import com.xkt.siot.shiro.UserPasswordService;
 import com.xkt.siot.test.BaseTest;
 import com.xkt.siot.utils.RandomUserGenerator;
 import java.util.List;
 import javax.annotation.Resource;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.PasswordService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,9 @@ public class UserServiceTest extends BaseTest {
     @Test
     @Rollback(true)
     public void create() {
-        User user = new User("gugia", "123");
+        User user = randomUserGenerator.getRandomUser();
+        user.setUsername("gugia");
+        user.setPassword("123");
         int id = userService.create(user);
         logger.info("创建用户的ID为：{}", id);
     }
@@ -64,14 +66,13 @@ public class UserServiceTest extends BaseTest {
     }
 
     @Test
-    public void password() {
+    public void passwordService() {
         String e1 = passwordService.encryptPassword("123");
         logger.info("密码加密后为 {}", e1);
         logger.info("密码匹配结果 {}", passwordService.passwordsMatch("123", e1));
-        DefaultPasswordService defaultPasswordService = new DefaultPasswordService();
-        defaultPasswordService.setHashFormat(new SiotCryptFormat());
-        String e2 = defaultPasswordService.encryptPassword("123");
+        PasswordService ps = new DefaultPasswordService();
+        String e2 = ps.encryptPassword("123");
         logger.info("密码加密后为 {}", e2);
-        logger.info("密码匹配结果 {}", defaultPasswordService.passwordsMatch("123", e2));
+        logger.info("密码匹配结果 {}", ps.passwordsMatch("123", e2));
     }
 }
