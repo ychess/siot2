@@ -19,14 +19,14 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 主节点服务器
  *
  * @author L.X <gugia@qq.com>
  */
-@Service
+@Component
 public class CoordinatorServer implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(CoordinatorServer.class);
