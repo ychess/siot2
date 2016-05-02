@@ -14,7 +14,7 @@ public class CoordinatorProtocol {
     private String eui;
     private String mac;
     private int head;
-    private int type;
+    private boolean request;
     private Object payload;
 
     /**
@@ -60,19 +60,19 @@ public class CoordinatorProtocol {
     }
 
     /**
-     * @return the type
+     * @return the request
      */
-    public int getType() {
-        return type;
+    public boolean isRequest() {
+        return request;
     }
 
     /**
-     * @param type the type to set
+     * @param request the request to set
      */
-    public void setType(int type) {
-        this.type = type;
+    public void setRequest(boolean request) {
+        this.request = request;
     }
-
+    
     /**
      * @return the payload
      */
