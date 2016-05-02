@@ -4,6 +4,7 @@
  */
 package com.xkt.siot.mina.handler;
 
+import com.xkt.siot.mina.protocol.CoordinatorProtocol;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -43,7 +44,10 @@ public class CoordinatorHandler extends IoHandlerAdapter {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        // Empty handler
+        CoordinatorProtocol protocol = (CoordinatorProtocol) message;
+        if(protocol.isRequest()){
+            
+        }
     }
 
     @Override
