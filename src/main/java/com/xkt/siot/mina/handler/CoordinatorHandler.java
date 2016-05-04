@@ -5,6 +5,7 @@
 package com.xkt.siot.mina.handler;
 
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
+import com.xkt.siot.mina.protocol.CoordinatorProtocolHead;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -45,8 +46,41 @@ public class CoordinatorHandler extends IoHandlerAdapter {
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         CoordinatorProtocol protocol = (CoordinatorProtocol) message;
-        if(protocol.isRequest()){
-            
+        if (protocol.isRequest()) {
+            switch (protocol.getHead()) {
+                case CoordinatorProtocolHead.SENSOR_DATA:
+                    break;
+                case CoordinatorProtocolHead.NETWORK_START_FAILED:
+                    break;
+                case CoordinatorProtocolHead.CHILD_NONE:
+                    break;
+                case CoordinatorProtocolHead.CHILD_JOIN:
+                    break;
+                case CoordinatorProtocolHead.CHILD_LEFT:
+                    break;
+                case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
+                    break;
+                case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
+                    break;
+                case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+                    break;
+                case CoordinatorProtocolHead.COORDINATOR_PROFILE_REPORT:
+                    break;
+                case CoordinatorProtocolHead.COORDINATOR_PROFILE_UPDATE:
+                    break;
+                case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
+                    break;
+                case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
+                    break;
+                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
+                    break;
+                case CoordinatorProtocolHead.MOTION_ALARM:
+                    break;
+                case CoordinatorProtocolHead.HUMIDITY_ALARM:
+                    break;
+                case CoordinatorProtocolHead.TEMPERATURE_ALARM:
+                    break;
+            }
         }
     }
 
