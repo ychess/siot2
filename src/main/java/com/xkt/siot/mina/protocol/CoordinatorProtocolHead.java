@@ -25,8 +25,9 @@ public class CoordinatorProtocolHead {
     public static final int COORDINATOR_INFO_REPORT = 51;
     public static final int COORDINATOR_INFO_UPDATE = 52;
     public static final int COORDINATOR_FIRMWARE_UPDATE = 53;
-    public static final int COORDINATOR_PROFILE_REPORT = 61;
-    public static final int COORDINATOR_PROFILE_UPDATE = 62;
+    
+    public static final int USER_PROFILE_REPORT = 61;
+    public static final int USER_PROFILE_UPDATE = 62;
     
     public static final int DEVICE_INFO_REPORT = 71;
     public static final int DEVICE_INFO_UPDATE = 72;

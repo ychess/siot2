@@ -4,8 +4,11 @@
  */
 package com.xkt.siot.mina.handler;
 
+import com.xkt.siot.domain.Log;
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
 import com.xkt.siot.mina.protocol.CoordinatorProtocolHead;
+import com.xkt.siot.service.LogService;
+import javax.annotation.Resource;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -22,6 +25,9 @@ import org.springframework.stereotype.Service;
 public class CoordinatorHandler extends IoHandlerAdapter {
 
     Logger logger = LoggerFactory.getLogger(CoordinatorHandler.class);
+    
+    @Resource
+    LogService logService;
 
     @Override
     public void sessionCreated(IoSession session) throws Exception {
@@ -49,6 +55,8 @@ public class CoordinatorHandler extends IoHandlerAdapter {
         if (protocol.isRequest()) {
             switch (protocol.getHead()) {
                 case CoordinatorProtocolHead.SENSOR_DATA:
+                    Log log = protocol.getPayload();
+                    logService.create(log);
                     break;
                 case CoordinatorProtocolHead.NETWORK_START_FAILED:
                     break;
