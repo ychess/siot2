@@ -55,7 +55,7 @@ public class CoordinatorHandler extends IoHandlerAdapter {
         if (protocol.isRequest()) {
             switch (protocol.getHead()) {
                 case CoordinatorProtocolHead.SENSOR_DATA:
-                    Log log = protocol.getPayload();
+                    Log log = (Log) protocol.getPayload();
                     logService.create(log);
                     break;
                 case CoordinatorProtocolHead.NETWORK_START_FAILED:
@@ -72,9 +72,9 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                     break;
                 case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
                     break;
-                case CoordinatorProtocolHead.COORDINATOR_PROFILE_REPORT:
+                case CoordinatorProtocolHead.USER_PROFILE_REPORT:
                     break;
-                case CoordinatorProtocolHead.COORDINATOR_PROFILE_UPDATE:
+                case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
                     break;
                 case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
                     break;

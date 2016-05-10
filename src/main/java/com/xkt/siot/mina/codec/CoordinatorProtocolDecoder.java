@@ -56,20 +56,14 @@ public class CoordinatorProtocolDecoder implements MessageDecoder {
             case CoordinatorProtocolHead.CHILD_LEFT:
             case CoordinatorProtocolHead.MOTION_ALARM:
             case CoordinatorProtocolHead.HUMIDITY_ALARM:
-            case CoordinatorProtocolHead.TEMPERATURE_ALARM: {
+            case CoordinatorProtocolHead.TEMPERATURE_ALARM:
+            case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
+            case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+            case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
+            case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
+            case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
                 Log log = gson.fromJson(protocol.getPayload().toString(), Log.class);
                 protocol.setPayload(log);
-                break;
-            }
-            case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
-                break;
-            case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
-                break;
-            case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
-                break;
-            case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-                break;
-            case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
                 break;
             case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
                 if (!protocol.isRequest()) {
