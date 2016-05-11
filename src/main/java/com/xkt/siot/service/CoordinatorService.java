@@ -9,6 +9,7 @@ import com.xkt.siot.dao.UcormDao;
 import com.xkt.siot.domain.Coordinator;
 import com.xkt.siot.domain.Ucorm;
 import com.xkt.siot.exception.ServiceException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
@@ -70,6 +71,18 @@ public class CoordinatorService {
 
     public List<Coordinator> findByStatus(int value, int num, int page) {
         return coordinatorDao.findByValueAndPage(Coordinator.class, "status", "eq", value, num, page, "id", true);
+    }
+
+    public List<Coordinator> findByUserId(int userId) {
+        List<Ucorm> ucorms = ucormDao.findUcormsByUserid(userId);
+        List<Coordinator> coordinators = new ArrayList();
+        ucorms.stream().forEach((Ucorm ucorm) -> {
+            Coordinator coordinator = (Coordinator) coordinatorDao.get(Coordinator.class, ucorm.getCid());
+            if (coordinator != null) {
+                coordinators.add(coordinator);
+            }
+        });
+        return coordinators;
     }
 
     public void update(Coordinator coordinator) {

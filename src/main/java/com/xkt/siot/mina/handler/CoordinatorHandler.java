@@ -32,6 +32,7 @@ public class CoordinatorHandler extends IoHandlerAdapter {
     @Override
     public void sessionCreated(IoSession session) throws Exception {
         logger.info("地址 {} 已连接", session.getRemoteAddress().toString());// 显示客户端的ip和端口
+        //订阅移动端事件
     }
 
     @Override
