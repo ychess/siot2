@@ -4,9 +4,13 @@
  */
 package com.xkt.siot.mina.handler;
 
+import com.xkt.siot.domain.Coordinator;
 import com.xkt.siot.domain.Log;
+import com.xkt.siot.mina.event.MobileEventListener;
+import com.xkt.siot.mina.event.MobileEventManager;
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
 import com.xkt.siot.mina.protocol.CoordinatorProtocolHead;
+import com.xkt.siot.service.CoordinatorService;
 import com.xkt.siot.service.LogService;
 import javax.annotation.Resource;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -25,9 +29,13 @@ import org.springframework.stereotype.Service;
 public class CoordinatorHandler extends IoHandlerAdapter {
 
     Logger logger = LoggerFactory.getLogger(CoordinatorHandler.class);
-    
+
     @Resource
     LogService logService;
+    @Resource
+    CoordinatorService coordinatorService;
+    @Resource
+    MobileEventManager mobileEventManager;
 
     @Override
     public void sessionCreated(IoSession session) throws Exception {
@@ -55,39 +63,38 @@ public class CoordinatorHandler extends IoHandlerAdapter {
         CoordinatorProtocol protocol = (CoordinatorProtocol) message;
         if (protocol.isRequest()) {
             switch (protocol.getHead()) {
+                case CoordinatorProtocolHead.VALIDATION:
+                    Coordinator coordinator = coordinatorService.findByEui(protocol.getEui());
+                    if (coordinator != null) {
+                        mobileEventManager.addListener(new MobileEventListener(session, coordinator.getId()));
+                    } else {
+                        //验证eui和mac地址
+                        int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
+                        mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
+                    }
+                    break;
                 case CoordinatorProtocolHead.SENSOR_DATA:
+                case CoordinatorProtocolHead.NETWORK_START_FAILED:
+                case CoordinatorProtocolHead.CHILD_NONE:
+                case CoordinatorProtocolHead.CHILD_JOIN:
+                case CoordinatorProtocolHead.CHILD_LEFT:
+                case CoordinatorProtocolHead.MOTION_ALARM:
+                case CoordinatorProtocolHead.HUMIDITY_ALARM:
+                case CoordinatorProtocolHead.TEMPERATURE_ALARM:
+                case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
+                case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+                case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
+                case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
+                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
                     Log log = (Log) protocol.getPayload();
                     logService.create(log);
-                    break;
-                case CoordinatorProtocolHead.NETWORK_START_FAILED:
-                    break;
-                case CoordinatorProtocolHead.CHILD_NONE:
-                    break;
-                case CoordinatorProtocolHead.CHILD_JOIN:
-                    break;
-                case CoordinatorProtocolHead.CHILD_LEFT:
+//                    mobileEventManager.invoke(this, 0, 0, message);
                     break;
                 case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
                     break;
-                case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
-                    break;
-                case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
-                    break;
                 case CoordinatorProtocolHead.USER_PROFILE_REPORT:
                     break;
-                case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
-                    break;
                 case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
-                    break;
-                case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-                    break;
-                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
-                    break;
-                case CoordinatorProtocolHead.MOTION_ALARM:
-                    break;
-                case CoordinatorProtocolHead.HUMIDITY_ALARM:
-                    break;
-                case CoordinatorProtocolHead.TEMPERATURE_ALARM:
                     break;
             }
         }

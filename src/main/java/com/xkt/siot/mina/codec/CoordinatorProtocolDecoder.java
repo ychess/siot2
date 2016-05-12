@@ -49,6 +49,11 @@ public class CoordinatorProtocolDecoder implements MessageDecoder {
     public MessageDecoderResult decode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
         CoordinatorProtocol protocol = gson.fromJson(in.getString(charset.newDecoder()), CoordinatorProtocol.class);
         switch (protocol.getHead()) {
+            case CoordinatorProtocolHead.VALIDATION: {
+                Coordinator coordinator = gson.fromJson(protocol.getPayload().toString(), Coordinator.class);
+                protocol.setPayload(coordinator);
+                break;
+            }
             case CoordinatorProtocolHead.SENSOR_DATA:
             case CoordinatorProtocolHead.NETWORK_START_FAILED:
             case CoordinatorProtocolHead.CHILD_NONE:

@@ -11,6 +11,8 @@ package com.xkt.siot.mina.protocol;
  */
 public class CoordinatorProtocolHead {
 
+    public static final int VALIDATION = 1;
+    
     public static final int SENSOR_DATA = 11;
     
     public static final int NETWORK_START_FAILED = 101;
