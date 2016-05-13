@@ -7,7 +7,7 @@ package com.xkt.siot.dao;
 import org.springframework.stereotype.Repository;
 
 /**
- * 用户数据访问接口实现
+ * 主节点数据访问接口实现
  *
  * @author gugia
  * @param <Coordinator> 主节点类

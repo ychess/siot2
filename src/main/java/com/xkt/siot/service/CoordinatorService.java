@@ -4,6 +4,7 @@
  */
 package com.xkt.siot.service;
 
+import com.xkt.siot.dao.CertDao;
 import com.xkt.siot.dao.CoordinatorDao;
 import com.xkt.siot.dao.UcormDao;
 import com.xkt.siot.domain.Coordinator;
@@ -30,6 +31,8 @@ public class CoordinatorService {
 
     @Resource
     CoordinatorDao coordinatorDao;
+    @Resource
+    CertDao certDao;
     @Resource
     UcormDao ucormDao;
 
@@ -90,6 +93,10 @@ public class CoordinatorService {
             throw new ServiceException("coordinator不能为null");
         }
         coordinatorDao.update(coordinator);
+    }
+
+    public boolean validate(String eui, String mac) {
+        return certDao.findCert(eui, mac) != null;
     }
 
     public int associateUser(int uid, Coordinator coordinator) {

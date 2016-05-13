@@ -13,6 +13,7 @@
     <property name="hibernate.default_batch_fetch_size">20</property>
     <property name="hibernate.max_fetch_depth">2</property>
     <mapping class="com.xkt.siot.domain.Cdorm"/>
+    <mapping class="com.xkt.siot.domain.Cert"/>
     <mapping class="com.xkt.siot.domain.Coordinator"/>
     <mapping class="com.xkt.siot.domain.Delivery"/>
     <mapping class="com.xkt.siot.domain.Device"/>

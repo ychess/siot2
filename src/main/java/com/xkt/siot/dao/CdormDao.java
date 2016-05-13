@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
- * 用户数据访问接口实现
+ * 主从节点映射数据访问接口实现
  *
  * @author gugia
  * @param <T> 主节点从节点映射关系类

@@ -3,6 +3,7 @@
 <hibernate-reverse-engineering>
     <schema-selection match-catalog="siotdb"/>
     <table-filter match-name="cdorm"/>
+    <table-filter match-name="cert"/>
     <table-filter match-name="coordinator"/>
     <table-filter match-name="delivery"/>
     <table-filter match-name="device"/>

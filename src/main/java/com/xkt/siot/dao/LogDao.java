@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
- * 用户数据访问接口实现
+ * 日志数据访问接口实现
  *
  * @author gugia
  * @param <T> 日志类

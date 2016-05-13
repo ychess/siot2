@@ -61,18 +61,26 @@ public class CoordinatorHandler extends IoHandlerAdapter {
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         CoordinatorProtocol protocol = (CoordinatorProtocol) message;
+        Coordinator coordinator = coordinatorService.findByEui(protocol.getEui());
         if (protocol.isRequest()) {
             switch (protocol.getHead()) {
-                case CoordinatorProtocolHead.VALIDATION:
-                    Coordinator coordinator = coordinatorService.findByEui(protocol.getEui());
+                case CoordinatorProtocolHead.VALIDATION: {
                     if (coordinator != null) {
                         mobileEventManager.addListener(new MobileEventListener(session, coordinator.getId()));
+                        protocol.setPayload("success");
                     } else {
-                        //验证eui和mac地址
-                        int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
-                        mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
+                        boolean result = coordinatorService.validate(protocol.getEui(), protocol.getMac());//验证eui和mac地址
+                        if (result) {
+                            int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
+                            mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
+                            protocol.setPayload("success");
+                        } else {
+                            protocol.setPayload("fail");
+                        }
                     }
+                    session.write(protocol);
                     break;
+                }
                 case CoordinatorProtocolHead.SENSOR_DATA:
                 case CoordinatorProtocolHead.NETWORK_START_FAILED:
                 case CoordinatorProtocolHead.CHILD_NONE:
@@ -85,11 +93,16 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                 case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
                 case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
                 case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
-                    Log log = (Log) protocol.getPayload();
-                    logService.create(log);
-//                    mobileEventManager.invoke(this, 0, 0, message);
+                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE: {
+                    if (coordinator != null) {
+                        Log log = (Log) protocol.getPayload();
+                        logService.create(log);
+                        protocol.setPayload("success");
+                        session.write(protocol);
+                        mobileEventManager.invoke(this, 0, 0, message);
+                    }
                     break;
+                }
                 case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
                     break;
                 case CoordinatorProtocolHead.USER_PROFILE_REPORT:

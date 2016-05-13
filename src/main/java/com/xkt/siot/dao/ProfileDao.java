@@ -7,7 +7,7 @@ package com.xkt.siot.dao;
 import org.springframework.stereotype.Repository;
 
 /**
- * 用户数据访问接口实现
+ * 用户配置文件数据访问接口实现
  *
  * @author gugia
  * @param <Profile> 情景模式类
