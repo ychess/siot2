@@ -99,7 +99,7 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                         logService.create(log);
                         protocol.setPayload("success");
                         session.write(protocol);
-                        mobileEventManager.invoke(this, 0, 0, message);
+                        mobileEventManager.invoke(this, 1, protocol.getHead(), protocol.getPayload());
                     }
                     break;
                 }
