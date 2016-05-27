@@ -6,6 +6,7 @@ package com.xkt.siot.mina.handler;
 
 import com.xkt.siot.domain.Coordinator;
 import com.xkt.siot.domain.Log;
+import com.xkt.siot.mina.event.CoordinatorEventManager;
 import com.xkt.siot.mina.event.MobileEventListener;
 import com.xkt.siot.mina.event.MobileEventManager;
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
@@ -35,6 +36,8 @@ public class CoordinatorHandler extends IoHandlerAdapter {
     @Resource
     CoordinatorService coordinatorService;
     @Resource
+    CoordinatorEventManager coordinatorEventManager;
+    @Resource
     MobileEventManager mobileEventManager;
 
     @Override
@@ -62,54 +65,72 @@ public class CoordinatorHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
         CoordinatorProtocol protocol = (CoordinatorProtocol) message;
         Coordinator coordinator = coordinatorService.findByEui(protocol.getEui());
-        if (protocol.isRequest()) {
-            switch (protocol.getHead()) {
-                case CoordinatorProtocolHead.VALIDATION: {
-                    if (coordinator != null) {
-                        mobileEventManager.addListener(new MobileEventListener(session, coordinator.getId()));
-                        protocol.setPayload("success");
-                    } else {
-                        boolean result = coordinatorService.validate(protocol.getEui(), protocol.getMac());//验证eui和mac地址
-                        if (result) {
-                            int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
-                            mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
-                            protocol.setPayload("success");
-                        } else {
-                            protocol.setPayload("fail");
-                        }
-                    }
-                    session.write(protocol);
-                    break;
+        switch (protocol.getHead()) {
+            /* 验证主节点是否合法 */
+            case CoordinatorProtocolHead.VALIDATION: {
+                if (!protocol.isRequest()) {
+                    break; //验证是主节点向服务器单向请求，不可能是Response
                 }
-                case CoordinatorProtocolHead.SENSOR_DATA:
-                case CoordinatorProtocolHead.NETWORK_START_FAILED:
-                case CoordinatorProtocolHead.CHILD_NONE:
-                case CoordinatorProtocolHead.CHILD_JOIN:
-                case CoordinatorProtocolHead.CHILD_LEFT:
-                case CoordinatorProtocolHead.MOTION_ALARM:
-                case CoordinatorProtocolHead.HUMIDITY_ALARM:
-                case CoordinatorProtocolHead.TEMPERATURE_ALARM:
-                case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
-                case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
-                case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
-                case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-                case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE: {
-                    if (coordinator != null) {
-                        Log log = (Log) protocol.getPayload();
-                        logService.create(log);
+                if (coordinator != null) { //存在eui匹配的主节点
+                    mobileEventManager.addListener(new MobileEventListener(session, coordinator.getId()));
+                    protocol.setPayload("success");
+                } else { //如果数据库中尚未有符合eui的主节点条目，则验证合法性
+                    boolean result = coordinatorService.validate(protocol.getEui(), protocol.getMac());//验证eui和mac地址
+                    if (result) { //合法：新建条目，返回成功消息
+                        int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
+                        mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
                         protocol.setPayload("success");
-                        session.write(protocol);
-                        mobileEventManager.invoke(this, 1, protocol.getHead(), protocol.getPayload());
+                    } else { //非法：返回失败消息
+                        protocol.setPayload("fail");
                     }
-                    break;
                 }
-                case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
-                    break;
-                case CoordinatorProtocolHead.USER_PROFILE_REPORT:
-                    break;
-                case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
-                    break;
+                session.write(protocol);
+                break;
             }
+            case CoordinatorProtocolHead.SENSOR_DATA:
+            case CoordinatorProtocolHead.NETWORK_START_FAILED:
+            case CoordinatorProtocolHead.CHILD_NONE:
+            case CoordinatorProtocolHead.CHILD_JOIN:
+            case CoordinatorProtocolHead.CHILD_LEFT:
+            case CoordinatorProtocolHead.MOTION_ALARM:
+            case CoordinatorProtocolHead.HUMIDITY_ALARM:
+            case CoordinatorProtocolHead.TEMPERATURE_ALARM:{
+                if (!protocol.isRequest()) {
+                    break; //上述情况不存在Response
+                }
+                if (coordinator != null) {
+                    Log log = (Log) protocol.getPayload();
+                    logService.create(log);
+                    protocol.setPayload("success");
+                    session.write(protocol);
+                    coordinatorEventManager.invoke(this, coordinator.getId(), protocol.getHead(), log);
+                    //mobileEventManager.invoke(this, 1, protocol.getHead(), protocol.getPayload());
+                }
+                break;
+            }
+            case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
+            case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+            case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
+            case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
+            case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE: {
+                if (protocol.isRequest()) {
+                    break; //上述情况不存在Request
+                }
+                if (coordinator != null) {
+                    Log log = (Log) protocol.getPayload();
+                    logService.create(log);
+                    protocol.setPayload("success");
+                    session.write(protocol);
+                    mobileEventManager.invoke(this, 1, protocol.getHead(), protocol.getPayload());
+                }
+                break;
+            }
+            case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
+                break;
+            case CoordinatorProtocolHead.USER_PROFILE_REPORT:
+                break;
+            case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
+                break;
         }
     }
 

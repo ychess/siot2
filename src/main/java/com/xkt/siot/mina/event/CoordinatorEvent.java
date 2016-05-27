@@ -11,9 +11,9 @@ import java.util.EventObject;
  *
  * @author L.X <gugia@qq.com>
  */
-public class CoodinatorEvent extends EventObject {
+public class CoordinatorEvent extends EventObject {
 
-    public CoodinatorEvent(Object source) {
+    public CoordinatorEvent(Object source) {
         super(source);
     }
 
