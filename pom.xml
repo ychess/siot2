@@ -44,6 +44,8 @@
         <jstl.ver>1.2</jstl.ver>
         <!--gson-->
         <gson.ver>2.5</gson.ver>
+        <!--jackson-->
+        <jackson.ver>2.7.5</jackson.ver>
     </properties>
     
     <dependencies>
@@ -101,6 +103,11 @@
             <version>${springframework.ver}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${springframework.ver}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.ver}</version>
@@ -149,6 +156,21 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.ver}</version>
         </dependency>
     </dependencies>
 

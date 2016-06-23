@@ -9,6 +9,7 @@ import com.xkt.siot.mina.codec.CoordinatorCodecFactory;
 import com.xkt.siot.mina.codec.CoordinatorProtocolDecoder;
 import com.xkt.siot.mina.codec.CoordinatorProtocolEncoder;
 import com.xkt.siot.mina.handler.CoordinatorHandler;
+import com.xkt.siot.mina.handler.SimpleTextHandler;
 import com.xkt.siot.mina.keepalive.KeepAliveMessageFactoryImpl;
 import com.xkt.siot.mina.keepalive.KeepAliveProtocol;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 import org.apache.mina.filter.logging.LoggingFilter;
@@ -27,43 +29,36 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * 主节点服务器
+ * 简单文本服务器，用于测试
  *
  * @author L.X <gugia@qq.com>
  */
 @Component
-public class CoordinatorServer implements Runnable {
+public class SimpleTextServer implements Runnable {
 
-    private final Logger logger = LoggerFactory.getLogger(CoordinatorServer.class);
+    private final Logger logger = LoggerFactory.getLogger(SimpleTextServer.class);
 
     @Resource
     ServerSettings serverSettings;
     @Resource
-    CoordinatorHandler coordinatorHandler;
+    SimpleTextHandler simpleTextHandler;
 
     @Override
     public void run() {
-        logger.info("主节点服务器启动中...");
+        logger.info("简单文本服务器启动中...");
         IoAcceptor ioAcceptor = new NioSocketAcceptor();
-        ioAcceptor.getSessionConfig().setReadBufferSize(serverSettings.getCsBufferSize());
-        ioAcceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, serverSettings.getCsTimeout());
+        ioAcceptor.getSessionConfig().setReadBufferSize(serverSettings.getSsBufferSize());
+        ioAcceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, serverSettings.getSsTimeout());
         // 设置日志记录器
-        ioAcceptor.getFilterChain().addLast("logger", new LoggingFilter(CoordinatorServer.class));
+        ioAcceptor.getFilterChain().addLast("logger", new LoggingFilter(SimpleTextServer.class));
         // 设置编码过滤器
-        CoordinatorCodecFactory factory = new CoordinatorCodecFactory(
-                new CoordinatorProtocolEncoder(Charset.forName("UTF-8")),
-                new CoordinatorProtocolDecoder(Charset.forName("UTF-8")));
+        TextLineCodecFactory factory = new TextLineCodecFactory(Charset.forName("UTF-8"));
         ioAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(factory));
-        KeepAliveMessageFactory keepAliveMessageFactory = new KeepAliveMessageFactoryImpl();
-        KeepAliveFilter keepAliveFilter = new KeepAliveFilter(keepAliveMessageFactory, IdleStatus.BOTH_IDLE);
-        keepAliveFilter.setForwardEvent(true);//当session进入idle状态的时候，依然调用coordinatorHandler中sessionIdle()方法
-        keepAliveFilter.setRequestInterval(KeepAliveProtocol.INTERVAL);
-        keepAliveFilter.setRequestTimeout(KeepAliveProtocol.TIMEOUT);//反馈超时默认会关闭连接
-        ioAcceptor.setHandler(coordinatorHandler);//指定业务逻辑处理器
+        ioAcceptor.setHandler(simpleTextHandler);//指定业务逻辑处理器
         try {
-            ioAcceptor.bind(new InetSocketAddress(serverSettings.getCsPort()));//设置端口号并开始接受请求
+            ioAcceptor.bind(new InetSocketAddress(serverSettings.getSsPort()));//设置端口号并开始接受请求
         } catch (IOException ex) {
-            logger.info("主节点服务器捕捉到错误", ex);
+            logger.info("简单文本服务器捕捉到错误", ex);
         }
     }
 

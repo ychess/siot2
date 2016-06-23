@@ -23,16 +23,15 @@
     </head>
     <body>
         <div class="login">
-            <h1>Login</h1>
-            <form method="post">
+            <h1>物联网用户登录</h1>
+            <form class="login-form" method="post">
                 <input type="text" name="username" placeholder="手机号码/邮箱/用户名" required="required" <c:if test="${not empty error}">value="${posted_username}"</c:if> />
                 <input type="password" name="password" placeholder="请输入密码" required="required" />
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="rememberMe" value="true" /> 记住我
+                        <input type="checkbox" name="rememberMe" value="true" /> 记住我 <c:if test="${not empty error}"><span class="alert">${error}</span></c:if>
                     </label>
                 </div>
-                <c:if test="${not empty error}"><div class="alert alert-danger">${error}</div></c:if>
                 <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>
             </form>
         </div>

@@ -4,6 +4,7 @@
  */
 package com.xkt.siot.controller;
 
+import com.xkt.siot.domain.User;
 import com.xkt.siot.service.UserService;
 import com.xkt.siot.shiro.UserPasswordService;
 import javax.annotation.Resource;
@@ -45,7 +46,8 @@ public class UserController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        logger.info("匹配结果 {}", passwordService.passwordsMatch(password, userService.findByName(username).getPassword()));
+        //userService.findByName(username).getPassword()会导致NullPointerException
+        //logger.info("匹配结果 {}", passwordService.passwordsMatch(password, userService.findByName(username).getPassword()));
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         if (req.getParameter("rememberMe") != null) {
             token.setRememberMe(true);
@@ -53,7 +55,7 @@ public class UserController extends BaseController {
         ModelAndView model = new ModelAndView();
         try {
             subject.login(token);
-            model.setViewName("redirect:/user");
+            model.setViewName("redirect:/console");
         } catch (UnknownAccountException | IncorrectCredentialsException | DisabledAccountException ex) {
             token.clear();
             model.setViewName("login");
@@ -75,8 +77,8 @@ public class UserController extends BaseController {
         return model;
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
     public String getp() {
-        return "user";
+        return "unauthorized";
     }
 }

@@ -12,8 +12,8 @@ function getRootPath() {
     return(localhostPath + projectName);
 }
 
-function startCs() {
-    var url = getRootPath() + "/console/cs/start";
+function startSS() {
+    var url = getRootPath() + "/console/ss/start";
     $.ajax({
         type: 'POST',
         url: url,
@@ -26,8 +26,8 @@ function startCs() {
     });
 }
 
-function stopCs() {
-    var url = getRootPath() + "/console/cs/stop";
+function stopAll() {
+    var url = getRootPath() + "/console/all/stop";
     $.ajax({
         type: 'POST',
         url: url,

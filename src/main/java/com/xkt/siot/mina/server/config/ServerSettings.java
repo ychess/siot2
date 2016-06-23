@@ -2,7 +2,7 @@
  * Copyright 2016 XKT Ltd., Co.
  * Licensed under the Apache License 2.0.
  */
-package com.xkt.siot.mina.server;
+package com.xkt.siot.mina.server.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -31,102 +31,91 @@ public class ServerSettings {
     
     @Value("#{sp['mobile.udp.port']}")
     private int udpPort;
+    
+    @Value("#{sp['simple.server.port']}")
+    private int ssPort;
+    @Value("#{sp['simple.server.timeout']}")
+    private int ssTimeout;
+    @Value("#{sp['simple.server.buffersize']}")
+    private int ssBufferSize;
 
-    /**
-     * @return the csPort
-     */
     public int getCsPort() {
         return csPort;
     }
 
-    /**
-     * @param csPort the csPort to set
-     */
     public void setCsPort(int csPort) {
         this.csPort = csPort;
     }
 
-    /**
-     * @return the csTimeout
-     */
     public int getCsTimeout() {
         return csTimeout;
     }
 
-    /**
-     * @param csTimeout the csTimeout to set
-     */
     public void setCsTimeout(int csTimeout) {
         this.csTimeout = csTimeout;
     }
 
-    /**
-     * @return the csBufferSize
-     */
     public int getCsBufferSize() {
         return csBufferSize;
     }
 
-    /**
-     * @param csBufferSize the csBufferSize to set
-     */
     public void setCsBufferSize(int csBufferSize) {
         this.csBufferSize = csBufferSize;
     }
 
-    /**
-     * @return the msPort
-     */
     public int getMsPort() {
         return msPort;
     }
 
-    /**
-     * @param msPort the msPort to set
-     */
     public void setMsPort(int msPort) {
         this.msPort = msPort;
     }
 
-    /**
-     * @return the msTimeout
-     */
     public int getMsTimeout() {
         return msTimeout;
     }
 
-    /**
-     * @param msTimeout the msTimeout to set
-     */
     public void setMsTimeout(int msTimeout) {
         this.msTimeout = msTimeout;
     }
 
-    /**
-     * @return the msBufferSize
-     */
     public int getMsBufferSize() {
         return msBufferSize;
     }
 
-    /**
-     * @param msBufferSize the msBufferSize to set
-     */
     public void setMsBufferSize(int msBufferSize) {
         this.msBufferSize = msBufferSize;
     }
 
-    /**
-     * @return the udpPort
-     */
     public int getUdpPort() {
         return udpPort;
     }
 
-    /**
-     * @param udpPort the udpPort to set
-     */
     public void setUdpPort(int udpPort) {
         this.udpPort = udpPort;
+    }
+
+    public int getSsPort() {
+        return ssPort;
+    }
+
+    public void setSsPort(int ssPort) {
+        this.ssPort = ssPort;
+    }
+
+    public int getSsTimeout() {
+        return ssTimeout;
+    }
+
+    public void setSsTimeout(int ssTimeout) {
+        this.ssTimeout = ssTimeout;
+    }
+
+    public int getSsBufferSize() {
+        return ssBufferSize;
+    }
+
+    public void setSsBufferSize(int ssBufferSize) {
+        this.ssBufferSize = ssBufferSize;
     }
 }

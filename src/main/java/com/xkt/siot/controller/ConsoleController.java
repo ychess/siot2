@@ -5,6 +5,7 @@
 package com.xkt.siot.controller;
 
 import com.xkt.siot.mina.server.CoordinatorServer;
+import com.xkt.siot.mina.server.SimpleTextServer;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class ConsoleController extends BaseController {
     ThreadPoolTaskExecutor taskExecutor;
     @Resource
     CoordinatorServer coordinatorServer;
+    @Resource
+    SimpleTextServer simpleTextServer;
 
     @RequestMapping(value = "/console", method = RequestMethod.GET)
     public ModelAndView console() {
@@ -41,13 +44,20 @@ public class ConsoleController extends BaseController {
     @RequestMapping(value = "/console/cs/start", method = RequestMethod.POST)
     public String startCoordinatorServer() {
         taskExecutor.execute(coordinatorServer);
-        return "done";
+        return "Coordinator server is launching";
     }
     
     @ResponseBody
-    @RequestMapping(value = "/console/cs/stop", method = RequestMethod.POST)
-    public String stopCoordinatorServer() {
+    @RequestMapping(value = "/console/ss/start", method = RequestMethod.POST)
+    public String startSimpleTextServer() {
+        taskExecutor.execute(simpleTextServer);
+        return "Simple text server is launching";
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/console/all/stop", method = RequestMethod.POST)
+    public String stopAllServer() {
         taskExecutor.destroy();
-        return "done";
+        return "All servers are stopped";
     }
 }
