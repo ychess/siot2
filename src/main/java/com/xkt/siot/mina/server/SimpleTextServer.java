@@ -5,13 +5,8 @@
 package com.xkt.siot.mina.server;
 
 import com.xkt.siot.mina.server.config.ServerSettings;
-import com.xkt.siot.mina.codec.CoordinatorCodecFactory;
-import com.xkt.siot.mina.codec.CoordinatorProtocolDecoder;
-import com.xkt.siot.mina.codec.CoordinatorProtocolEncoder;
-import com.xkt.siot.mina.handler.CoordinatorHandler;
 import com.xkt.siot.mina.handler.SimpleTextHandler;
-import com.xkt.siot.mina.keepalive.KeepAliveMessageFactoryImpl;
-import com.xkt.siot.mina.keepalive.KeepAliveProtocol;
+import com.xkt.siot.websocket.event.PrintLogEventManager;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
@@ -20,8 +15,6 @@ import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
-import org.apache.mina.filter.keepalive.KeepAliveFilter;
-import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.slf4j.Logger;
@@ -42,10 +35,13 @@ public class SimpleTextServer implements Runnable {
     ServerSettings serverSettings;
     @Resource
     SimpleTextHandler simpleTextHandler;
+    @Resource
+    PrintLogEventManager printLogEventManager;
 
     @Override
     public void run() {
         logger.info("简单文本服务器启动中...");
+        printLogEventManager.invoke(this, "简单文本服务器启动中...");
         IoAcceptor ioAcceptor = new NioSocketAcceptor();
         ioAcceptor.getSessionConfig().setReadBufferSize(serverSettings.getSsBufferSize());
         ioAcceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, serverSettings.getSsTimeout());
@@ -59,6 +55,8 @@ public class SimpleTextServer implements Runnable {
             ioAcceptor.bind(new InetSocketAddress(serverSettings.getSsPort()));//设置端口号并开始接受请求
         } catch (IOException ex) {
             logger.info("简单文本服务器捕捉到错误", ex);
+            String msg = String.format("简单文本服务器捕捉到错误：%s", ex.getCause());
+            printLogEventManager.invoke(this, msg);
         }
     }
 

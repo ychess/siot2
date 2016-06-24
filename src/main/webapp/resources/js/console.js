@@ -21,7 +21,7 @@ function startSS() {
         dataType: 'text',
         success: function (result) {
             alert(result);
-            location.reload();
+//            location.reload();
         }
     });
 }
@@ -35,7 +35,36 @@ function stopAll() {
         dataType: 'text',
         success: function (result) {
             alert(result);
-            location.reload();
+//            location.reload();
         }
     });
+}
+
+/* WebSocket */
+var sock = new SockJS('http://localhost:8080/siot/sockjs/webSocketServer');
+sock.onopen = function () {
+    console.log('SockJS 连接已建立');
+};
+sock.onmessage = function (e) {
+    console.log('SockJS 收到消息：', e.data);
+    var html = '<p>' + e.data + '</p>';
+    $("#console_output").append(html);
+    if ($("#console_output").children().size() > 21) {
+        $("#console_output").children().eq(0).remove();
+    }
+};
+sock.onclose = function () {
+    console.log('SockJS 连接已关闭');
+};
+function sendSockJs() {
+    var text = $("#text_sockjs").val();
+    if (text === "") {
+        alert("发送内容不能为空");
+        $("#text_sockjs").focus();
+    } else {
+        sock.send(text);
+    }
+}
+function closeSockJs() {
+    sock.close();
 }

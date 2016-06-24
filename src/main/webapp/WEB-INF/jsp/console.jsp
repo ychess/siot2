@@ -43,14 +43,36 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
-            <div class="container">
-                <button class="btn btn-default" type="submit" onclick="startSS()">启动测试服务器</button>
-                <button class="btn btn-default" type="submit" onclick="stopAll()">停止所有服务器</button>
+            <div class="container-fluid">
+                <div class="page-header">
+                    <h2>测试服务器控制
+                        <span class="control-btn">
+                            <button class="btn btn-success" type="submit" onclick="startSS()">启动测试服务器</button>
+                            <button class="btn btn-danger" type="submit" onclick="stopAll()">停止所有服务器</button>
+                        </span>
+                    </h2>
+                </div>
+                <div class="jumbotron" id="console_output">
+                    
+                </div>
+                <div class="page-header">
+                    <h2>SockJs控制
+                        <span class="control-btn">
+                            <button class="btn btn-default" type="submit" onclick="closeSockJs()">SockJs OFF</button>
+                            <button class="btn btn-default" type="submit" onclick="sendSockJs()">Send a message</button>
+                        </span>
+                    </h2>
+                </div>
+                <div class="form-group">
+                    <label for="text_sockjs">SockJs Message</label>
+                    <input type="text" class="form-control" id="text_sockjs" placeholder="Type something…">
+                </div>
             </div>
         </div> <!-- /container -->
         <spring:url value="/resources/js" var="js" />
         <script src="${js}/jquery-1.11.3.min.js" type="text/javascript"></script>
         <script src="${js}/bootstrap.min.js" type="text/javascript"></script>
+        <script src="${js}/sockjs-1.1.1.js" type="text/javascript"></script>
         <script src="${js}/console.js" type="text/javascript"></script>
     </body>
 </html>
