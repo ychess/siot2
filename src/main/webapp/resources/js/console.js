@@ -82,7 +82,7 @@ function printLog(msg) {
 }
 
 /* WebSocket */
-var sock = new SockJS('http://localhost:8080/siot/sockjs/webSocketServer');
+var sock = new SockJS(getRootPath() + '/sockjs/webSocketServer');
 sock.onopen = function () {
     console.log('SockJS 连接已建立');
     printLog('SockJS 连接已建立');
