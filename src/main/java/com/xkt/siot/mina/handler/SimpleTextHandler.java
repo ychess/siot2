@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
+ * 简单文本服务器事件处理服务
  *
  * @author L.X <gugia@qq.com>
  */
@@ -52,9 +53,9 @@ public class SimpleTextHandler extends IoHandlerAdapter {
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
         logger.info("连接 {} 空闲，空闲时间 {} 秒", session.getRemoteAddress().toString(),
-                session.getIdleCount(status) * serverSettings.getSsTimeout() / 1000);
-        String msg = String.format("连接 %s 空闲，空闲时间 %s 秒", session.getRemoteAddress().toString(),
-                session.getIdleCount(status) * serverSettings.getSsTimeout() / 1000);
+                session.getIdleCount(status) * 10);
+        String msg = String.format("连接 %1$s 空闲，空闲时间 %2$s 秒", session.getRemoteAddress().toString(),
+                session.getIdleCount(status) * 10);
         printLogEventManager.invoke(this, msg);
     }
 

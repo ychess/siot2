@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 public class SimpleTextServer implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(SimpleTextServer.class);
+    private IoAcceptor ioAcceptor;
 
     @Resource
     ServerSettings serverSettings;
@@ -42,7 +43,7 @@ public class SimpleTextServer implements Runnable {
     public void run() {
         logger.info("简单文本服务器启动中...");
         printLogEventManager.invoke(this, "简单文本服务器启动中...");
-        IoAcceptor ioAcceptor = new NioSocketAcceptor();
+        ioAcceptor = new NioSocketAcceptor();
         ioAcceptor.getSessionConfig().setReadBufferSize(serverSettings.getSsBufferSize());
         ioAcceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, serverSettings.getSsTimeout());
         // 设置日志记录器
@@ -55,9 +56,16 @@ public class SimpleTextServer implements Runnable {
             ioAcceptor.bind(new InetSocketAddress(serverSettings.getSsPort()));//设置端口号并开始接受请求
         } catch (IOException ex) {
             logger.info("简单文本服务器捕捉到错误", ex);
-            String msg = String.format("简单文本服务器捕捉到错误：%s", ex.getCause());
+            String msg = String.format("简单文本服务器捕捉到错误：%s", ex.getMessage());
             printLogEventManager.invoke(this, msg);
         }
     }
 
+    public void stop() {
+        if (ioAcceptor.isActive()) {
+            ioAcceptor.dispose(true);
+            logger.info("简单文本服务器已停止");
+            printLogEventManager.invoke(this, "简单文本服务器已停止");
+        }
+    }
 }

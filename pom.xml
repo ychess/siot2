@@ -46,6 +46,8 @@
         <gson.ver>2.5</gson.ver>
         <!--jackson-->
         <jackson.ver>2.7.5</jackson.ver>
+        <!--websocket-api.ver-->
+        <websocket-api.ver>1.0</websocket-api.ver>
     </properties>
     
     <dependencies>
@@ -171,6 +173,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>${websocket-api.ver}</version>
         </dependency>
     </dependencies>
 

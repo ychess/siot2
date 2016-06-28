@@ -45,10 +45,11 @@
             </nav>
             <div class="container-fluid">
                 <div class="page-header">
-                    <h2>测试服务器控制
+                    <h2>简单文本服务器(测试服务器)日志
                         <span class="control-btn">
-                            <button class="btn btn-success" type="submit" onclick="startSS()">启动测试服务器</button>
-                            <button class="btn btn-danger" type="submit" onclick="stopAll()">停止所有服务器</button>
+                            <button class="btn btn-success" type="submit" onclick="ssexcute('start')">启动测试服务器</button>
+                            <button class="btn btn-danger" type="submit" onclick="ssexcute('stop')">停止测试服务器</button>
+                            <button class="btn btn-default" type="submit" onclick="runclient()">运行测试客户端</button>
                         </span>
                     </h2>
                 </div>

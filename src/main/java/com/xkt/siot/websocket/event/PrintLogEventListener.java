@@ -20,7 +20,7 @@ import org.springframework.web.socket.WebSocketSession;
  */
 public class PrintLogEventListener implements EventListener {
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Logger logger = LoggerFactory.getLogger(PrintLogEventListener.class);
     private WebSocketSession session;
 
@@ -41,12 +41,12 @@ public class PrintLogEventListener implements EventListener {
             return;
         }
         try {
-            StringBuilder sb = new StringBuilder();
-            String date = FORMAT.format(new Date());
-            sb.append(date);
-            sb.append(" - ");
-            sb.append(event.getMsg());
-            TextMessage message = new TextMessage(sb.toString());
+//            StringBuilder sb = new StringBuilder();
+//            String date = FORMAT.format(new Date());
+//            sb.append(date);
+//            sb.append(" - ");
+//            sb.append(event.getMsg());
+            TextMessage message = new TextMessage(event.getMsg());
             session.sendMessage(message);
         } catch (IOException ex) {
             logger.error("SockJS发送消息失败", ex);

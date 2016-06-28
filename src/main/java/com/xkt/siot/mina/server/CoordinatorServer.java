@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 public class CoordinatorServer implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(CoordinatorServer.class);
+    private IoAcceptor ioAcceptor;
 
     @Resource
     ServerSettings serverSettings;
@@ -44,7 +45,7 @@ public class CoordinatorServer implements Runnable {
     @Override
     public void run() {
         logger.info("主节点服务器启动中...");
-        IoAcceptor ioAcceptor = new NioSocketAcceptor();
+        ioAcceptor = new NioSocketAcceptor();
         ioAcceptor.getSessionConfig().setReadBufferSize(serverSettings.getCsBufferSize());
         ioAcceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, serverSettings.getCsTimeout());
         // 设置日志记录器
@@ -67,4 +68,10 @@ public class CoordinatorServer implements Runnable {
         }
     }
 
+    public void stop() {
+        if (ioAcceptor.isActive()) {
+            ioAcceptor.dispose(true);
+            logger.info("主节点服务器退出");
+        }
+    }
 }
