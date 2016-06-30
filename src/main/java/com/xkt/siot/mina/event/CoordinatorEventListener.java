@@ -7,6 +7,7 @@ package com.xkt.siot.mina.event;
 import com.xkt.siot.mina.protocol.MobileProtocol;
 import java.util.EventListener;
 import org.apache.mina.core.session.IoSession;
+import org.springframework.web.socket.WebSocketSession;
 
 /**
  * 主节点事件监听器
@@ -15,20 +16,20 @@ import org.apache.mina.core.session.IoSession;
  */
 public class CoordinatorEventListener implements EventListener {
 
-    private IoSession session;
+    private WebSocketSession session;
     private int userId;
 
-    public CoordinatorEventListener(IoSession session, int userId) {
+    public CoordinatorEventListener(WebSocketSession session, int userId) {
         super();
         this.session = session;
         this.userId = userId;
     }
 
-    public IoSession getSession() {
+    public WebSocketSession getSession() {
         return session;
     }
 
-    public void setSession(IoSession session) {
+    public void setSession(WebSocketSession session) {
         this.session = session;
     }
 
@@ -45,6 +46,6 @@ public class CoordinatorEventListener implements EventListener {
             return;
         }
         MobileProtocol protocol = new MobileProtocol();
-        session.write(protocol);
+        //session.write(protocol);
     }
 }

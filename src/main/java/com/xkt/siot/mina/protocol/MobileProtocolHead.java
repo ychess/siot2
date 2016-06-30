@@ -11,4 +11,13 @@ package com.xkt.siot.mina.protocol;
  */
 public class MobileProtocolHead {
 
+    /**
+     * 通过账户名和密码获得授权
+     */
+    public static final int AUTHORIZATION = 1;
+    
+    /**
+     * 安全退出
+     */
+    public static final int QUIT = 99;
 }

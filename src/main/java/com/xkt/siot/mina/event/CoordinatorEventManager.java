@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketSession;
 
 /**
  * 主节点事件管理器
@@ -35,6 +36,17 @@ public class CoordinatorEventManager {
 
     public void addListener(CoordinatorEventListener listener) {
         this.listeners.add(listener);
+    }
+    
+    public void removeListener(WebSocketSession session) {
+        Iterator<CoordinatorEventListener> it = this.listeners.iterator();
+        while (it.hasNext()) {
+            CoordinatorEventListener listener = it.next();
+            if (listener.getSession().equals(session)) {
+                this.listeners.remove(listener);
+                break;
+            }
+        }
     }
 
     protected void notifies(MobileEvent event) {
