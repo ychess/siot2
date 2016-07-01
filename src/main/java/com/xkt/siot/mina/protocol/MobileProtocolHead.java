@@ -17,7 +17,9 @@ public class MobileProtocolHead {
     public static final int AUTHORIZATION = 1;
     
     /**
-     * 安全退出
+     * 移动端下线并安全退出
      */
     public static final int QUIT = 99;
+    
+    
 }
