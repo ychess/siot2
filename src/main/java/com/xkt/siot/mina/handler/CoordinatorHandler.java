@@ -10,9 +10,11 @@ import com.xkt.siot.mina.event.CoordinatorEventManager;
 import com.xkt.siot.mina.event.MobileEventListener;
 import com.xkt.siot.mina.event.MobileEventManager;
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
-import com.xkt.siot.mina.protocol.CoordinatorProtocolHead;
+import com.xkt.siot.mina.protocol.MinaProtocolHead;
 import com.xkt.siot.service.CoordinatorService;
 import com.xkt.siot.service.LogService;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
@@ -30,6 +32,7 @@ import org.springframework.stereotype.Service;
 public class CoordinatorHandler extends IoHandlerAdapter {
 
     Logger logger = LoggerFactory.getLogger(CoordinatorHandler.class);
+    List<Coordinator> validatedCoordinators = new ArrayList();//通过验证的网关集合
 
     @Resource
     LogService logService;
@@ -67,17 +70,21 @@ public class CoordinatorHandler extends IoHandlerAdapter {
         Coordinator coordinator = coordinatorService.findByEui(protocol.getEui());
         switch (protocol.getHead()) {
             /* 验证主节点是否合法 */
-            case CoordinatorProtocolHead.VALIDATION: {
-                if (!protocol.isRequest()) {
-                    break; //验证是主节点向服务器单向请求，不可能是Response
-                }
+            case MinaProtocolHead.VALIDATION: {
                 if (coordinator != null) { //存在eui匹配的主节点
+                    if (!validatedCoordinators.contains(coordinator)) { //如果已验证的主节点集合中不包含该节点
+                        validatedCoordinators.add(coordinator);//则添加该节点
+                    }
                     mobileEventManager.addListener(new MobileEventListener(session, coordinator.getId()));
                     protocol.setPayload("success");
                 } else { //如果数据库中尚未有符合eui的主节点条目，则验证合法性
                     boolean result = coordinatorService.validate(protocol.getEui(), protocol.getMac());//验证eui和mac地址
                     if (result) { //合法：新建条目，返回成功消息
-                        int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload());
+                        int coordinatorId = coordinatorService.create((Coordinator) protocol.getPayload()); //数据库新建主节点条目
+                        Coordinator c = coordinatorService.findById(coordinatorId);
+                        if (!validatedCoordinators.contains(c)) { //如果已验证的主节点集合中不包含该节点
+                            validatedCoordinators.add(c);//则添加该节点
+                        }
                         mobileEventManager.addListener(new MobileEventListener(session, coordinatorId));
                         protocol.setPayload("success");
                     } else { //非法：返回失败消息
@@ -87,14 +94,14 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                 session.write(protocol);
                 break;
             }
-            case CoordinatorProtocolHead.SENSOR_DATA:
-            case CoordinatorProtocolHead.NETWORK_START_FAILED:
-            case CoordinatorProtocolHead.CHILD_NONE:
-            case CoordinatorProtocolHead.CHILD_JOIN:
-            case CoordinatorProtocolHead.CHILD_LEFT:
-            case CoordinatorProtocolHead.MOTION_ALARM:
-            case CoordinatorProtocolHead.HUMIDITY_ALARM:
-            case CoordinatorProtocolHead.TEMPERATURE_ALARM:{
+            case MinaProtocolHead.SENSOR_DATA:
+            case MinaProtocolHead.NETWORK_START_FAILED:
+            case MinaProtocolHead.CHILD_NONE:
+            case MinaProtocolHead.CHILD_JOIN:
+            case MinaProtocolHead.CHILD_LEFT:
+            case MinaProtocolHead.MOTION_ALARM:
+            case MinaProtocolHead.HUMIDITY_ALARM:
+            case MinaProtocolHead.TEMPERATURE_ALARM: {
                 if (!protocol.isRequest()) {
                     break; //上述情况不存在Response
                 }
@@ -108,11 +115,11 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                 }
                 break;
             }
-            case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
-            case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
-            case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
-            case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-            case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE: {
+            case MinaProtocolHead.COORDINATOR_INFO_UPDATE:
+            case MinaProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+            case MinaProtocolHead.USER_PROFILE_UPDATE:
+            case MinaProtocolHead.DEVICE_INFO_UPDATE:
+            case MinaProtocolHead.DEVICE_FIRMWARE_UPDATE: {
                 if (protocol.isRequest()) {
                     break; //上述情况不存在Request
                 }
@@ -125,11 +132,11 @@ public class CoordinatorHandler extends IoHandlerAdapter {
                 }
                 break;
             }
-            case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
+            case MinaProtocolHead.COORDINATOR_INFO_REPORT:
                 break;
-            case CoordinatorProtocolHead.USER_PROFILE_REPORT:
+            case MinaProtocolHead.USER_PROFILE_REPORT:
                 break;
-            case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
+            case MinaProtocolHead.DEVICE_INFO_REPORT:
                 break;
         }
     }

@@ -9,13 +9,18 @@ package com.xkt.siot.mina.protocol;
  *
  * @author L.X <gugia@qq.com>
  */
-public class CoordinatorProtocolHead {
+public class MinaProtocolHead {
+
+    /* 以下是设备端发起的事件，其中大部分由服务器（Mina Server）转换成Log类写入数据库，
+     * 并通知对应移动端，移动端不需要响应来自设备端的任何请求。
+     */
+    
     /**
-     * 硬件验证
+     * 硬件验证，不通知移动端
      */
     public static final int VALIDATION = 20;
     /**
-     * 传感器数据
+     * 传感器数据，不通知移动端（局域网模式下另说）
      */
     public static final int SENSOR_DATA = 21;
     /**
@@ -46,15 +51,18 @@ public class CoordinatorProtocolHead {
      * 电池电量报警
      */
     public static final int BATTERY_ALARM = 28;
-    public static final int COORDINATOR_INFO_REPORT = 28;
-    public static final int COORDINATOR_INFO_UPDATE = 29;
-    public static final int COORDINATOR_FIRMWARE_UPDATE = 30;
     
-    public static final int USER_PROFILE_REPORT = 61;
-    public static final int USER_PROFILE_UPDATE = 62;
+    /* ↓↓↓↓↓ 以下是移动端发起的事件，与设备端不同的是移动端的请求是要求对应网关反馈的，
+     * 这些反馈是今后的控制类应用的基础。
+     */
     
-    public static final int DEVICE_INFO_REPORT = 71;
-    public static final int DEVICE_INFO_UPDATE = 72;
-    public static final int DEVICE_FIRMWARE_UPDATE = 73;
-    
+    /**
+     * 用户情景模式变更
+     */
+    public static final int USER_PROFILE_UPDATE = 61;
+    /**
+     * 子节点变更
+     */
+    public static final int DEVICE_PROFILE_UPDATE = 62;
+
 }

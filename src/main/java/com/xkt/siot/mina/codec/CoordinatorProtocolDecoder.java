@@ -12,7 +12,7 @@ import com.xkt.siot.domain.Log;
 import com.xkt.siot.domain.Profile;
 import com.xkt.siot.mina.handler.CoordinatorHandler;
 import com.xkt.siot.mina.protocol.CoordinatorProtocol;
-import com.xkt.siot.mina.protocol.CoordinatorProtocolHead;
+import com.xkt.siot.mina.protocol.MinaProtocolHead;
 import java.nio.charset.Charset;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -49,40 +49,40 @@ public class CoordinatorProtocolDecoder implements MessageDecoder {
     public MessageDecoderResult decode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
         CoordinatorProtocol protocol = gson.fromJson(in.getString(charset.newDecoder()), CoordinatorProtocol.class);
         switch (protocol.getHead()) {
-            case CoordinatorProtocolHead.VALIDATION: {
+            case MinaProtocolHead.VALIDATION: {
                 Coordinator coordinator = gson.fromJson(protocol.getPayload().toString(), Coordinator.class);
                 protocol.setPayload(coordinator);
                 break;
             }
-            case CoordinatorProtocolHead.SENSOR_DATA:
-            case CoordinatorProtocolHead.NETWORK_START_FAILED:
-            case CoordinatorProtocolHead.CHILD_NONE:
-            case CoordinatorProtocolHead.CHILD_JOIN:
-            case CoordinatorProtocolHead.CHILD_LEFT:
-            case CoordinatorProtocolHead.MOTION_ALARM:
-            case CoordinatorProtocolHead.HUMIDITY_ALARM:
-            case CoordinatorProtocolHead.TEMPERATURE_ALARM:
-            case CoordinatorProtocolHead.COORDINATOR_INFO_UPDATE:
-            case CoordinatorProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
-            case CoordinatorProtocolHead.USER_PROFILE_UPDATE:
-            case CoordinatorProtocolHead.DEVICE_INFO_UPDATE:
-            case CoordinatorProtocolHead.DEVICE_FIRMWARE_UPDATE:
+            case MinaProtocolHead.SENSOR_DATA:
+            case MinaProtocolHead.NETWORK_START_FAILED:
+            case MinaProtocolHead.CHILD_NONE:
+            case MinaProtocolHead.CHILD_JOIN:
+            case MinaProtocolHead.CHILD_LEFT:
+            case MinaProtocolHead.MOTION_ALARM:
+            case MinaProtocolHead.HUMIDITY_ALARM:
+            case MinaProtocolHead.TEMPERATURE_ALARM:
+            case MinaProtocolHead.COORDINATOR_INFO_UPDATE:
+            case MinaProtocolHead.COORDINATOR_FIRMWARE_UPDATE:
+            case MinaProtocolHead.USER_PROFILE_UPDATE:
+            case MinaProtocolHead.DEVICE_INFO_UPDATE:
+            case MinaProtocolHead.DEVICE_FIRMWARE_UPDATE:
                 Log log = gson.fromJson(protocol.getPayload().toString(), Log.class);
                 protocol.setPayload(log);
                 break;
-            case CoordinatorProtocolHead.COORDINATOR_INFO_REPORT:
+            case MinaProtocolHead.COORDINATOR_INFO_REPORT:
                 if (!protocol.isRequest()) {
                     Coordinator coordinator = gson.fromJson(protocol.getPayload().toString(), Coordinator.class);
                     protocol.setPayload(coordinator);
                 }
                 break;
-            case CoordinatorProtocolHead.USER_PROFILE_REPORT:
+            case MinaProtocolHead.USER_PROFILE_REPORT:
                 if (!protocol.isRequest()) {
                     Profile profile = gson.fromJson(protocol.getPayload().toString(), Profile.class);
                     protocol.setPayload(profile);
                 }
                 break;
-            case CoordinatorProtocolHead.DEVICE_INFO_REPORT:
+            case MinaProtocolHead.DEVICE_INFO_REPORT:
                 if (!protocol.isRequest()) {
                     Device device = gson.fromJson(protocol.getPayload().toString(), Device.class);
                     protocol.setPayload(device);
