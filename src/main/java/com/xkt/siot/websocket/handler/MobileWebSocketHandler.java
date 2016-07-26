@@ -6,8 +6,10 @@ package com.xkt.siot.websocket.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.xkt.siot.domain.Profile;
 import com.xkt.siot.mina.event.CoordinatorEventListener;
 import com.xkt.siot.mina.event.CoordinatorEventManager;
+import com.xkt.siot.mina.protocol.MinaProtocolHead;
 import com.xkt.siot.mina.protocol.MobileProtocol;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
@@ -32,7 +34,7 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
+        /* 建立连接后进行的操作 */
         //org.springframework.web.socket.handler
     }
 
@@ -41,7 +43,14 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
         String msg = new String(message.asBytes());
         MobileProtocol protocol = gson.fromJson(msg, MobileProtocol.class);
         switch(protocol.getHead()){
-            
+            case MinaProtocolHead.USER_PROFILE_UPDATE: {
+                Profile profile = (Profile) protocol.getPayload();
+                coordinatorEventManager.invoke(this, 0, 0, profile);
+                break;
+            }
+            case MinaProtocolHead.DEVICE_PROFILE_UPDATE: {
+                break;
+            }
         }
         if ("订阅".equals(message.toString())) {
             int userId = 0;
