@@ -35,7 +35,7 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         /* 建立连接后进行的操作 */
-        //org.springframework.web.socket.handler
+        coordinatorEventManager.addListener(session);
     }
 
     @Override

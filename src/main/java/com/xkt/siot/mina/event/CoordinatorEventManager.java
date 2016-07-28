@@ -34,7 +34,16 @@ public class CoordinatorEventManager {
         this.listeners = new HashSet<>();
     }
 
-    public void addListener(CoordinatorEventListener listener) {
+    public void addListener(WebSocketSession session) {
+        Iterator<CoordinatorEventListener> it = this.listeners.iterator();
+        while (it.hasNext()) {
+            CoordinatorEventListener listener = it.next();
+            if (listener.getSession().equals(session)) {
+                logger.info("地址 {} 已是主节点事件(CoordinatorEvent)的监听者，此次操作被拒绝",session.getRemoteAddress());
+                return;
+            }
+        }
+        CoordinatorEventListener listener = new CoordinatorEventListener(session, 0);
         this.listeners.add(listener);
     }
     
