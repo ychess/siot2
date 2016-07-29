@@ -6,9 +6,10 @@ package com.xkt.siot.websocket.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.xkt.siot.domain.Device;
 import com.xkt.siot.domain.Profile;
-import com.xkt.siot.mina.event.CoordinatorEventListener;
 import com.xkt.siot.mina.event.CoordinatorEventManager;
+import com.xkt.siot.mina.event.MobileEventManager;
 import com.xkt.siot.mina.protocol.MinaProtocolHead;
 import com.xkt.siot.mina.protocol.MobileProtocol;
 import javax.annotation.Resource;
@@ -31,6 +32,8 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
 
     @Resource
     CoordinatorEventManager coordinatorEventManager;
+    @Resource
+    MobileEventManager mobileEventManager;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -40,23 +43,26 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        Integer userId = (Integer) session.getAttributes().get("userId");
+        if (userId == null) {
+            logger.warn("WebSocketSession {} 中没有userId属性，移动端消息无法处理", session.getRemoteAddress().getHostName());
+            return;
+        }
         String msg = new String(message.asBytes());
         MobileProtocol protocol = gson.fromJson(msg, MobileProtocol.class);
-        switch(protocol.getHead()){
+        switch (protocol.getHead()) {
             case MinaProtocolHead.USER_PROFILE_UPDATE: {
                 Profile profile = (Profile) protocol.getPayload();
-                coordinatorEventManager.invoke(this, 0, 0, profile);
+                mobileEventManager.invoke(this, userId, protocol.getHead(), profile);
                 break;
             }
             case MinaProtocolHead.DEVICE_PROFILE_UPDATE: {
+                Device device = (Device) protocol.getPayload();
+                mobileEventManager.invoke(this, userId, protocol.getHead(), device);
                 break;
             }
         }
-        if ("订阅".equals(message.toString())) {
-            int userId = 0;
-            coordinatorEventManager.addListener(new CoordinatorEventListener(session, userId));
-        }
-        session.sendMessage(message);
+//        session.sendMessage(message);
     }
 
     @Override
