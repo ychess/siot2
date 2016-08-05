@@ -48,7 +48,7 @@ public class MobileWebSocketInterceptor extends HttpSessionHandshakeInterceptor 
                 return false;
             }
         }
-        request.getURI().parseServerAuthority();//not finish
+        //request.getURI().parseServerAuthority();//not finish
         return true;
     }
 

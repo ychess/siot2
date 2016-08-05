@@ -4,6 +4,7 @@
  */
 package com.xkt.siot.mina.event;
 
+import com.xkt.siot.websocket.event.MobileEvent;
 import com.xkt.siot.domain.Coordinator;
 import com.xkt.siot.service.CoordinatorService;
 import java.util.HashSet;

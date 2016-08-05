@@ -5,7 +5,6 @@
 package com.xkt.siot.websocket.event;
 
 import com.xkt.siot.domain.Coordinator;
-import com.xkt.siot.mina.event.MobileEventListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;

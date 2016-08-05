@@ -2,9 +2,11 @@
  * Copyright 2016 XKT Ltd., Co.
  * Licensed under the Apache License 2.0.
  */
-package com.xkt.siot.mina.event;
+package com.xkt.siot.websocket.event;
 
 import com.xkt.siot.domain.Coordinator;
+import com.xkt.siot.domain.Device;
+import com.xkt.siot.domain.Profile;
 import com.xkt.siot.service.CoordinatorService;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -37,9 +39,13 @@ public class MobileEventManager {
         this.listeners.add(listener);
     }
 
-    protected void notifies(MobileEvent event) {
+    protected void notifies(MobileEvent event, boolean isForCoordinator) {
         Iterator<MobileEventListener> it = this.listeners.iterator();
         logger.info("当前移动端事件监听器数量：{}", listeners.size());
+        if (isForCoordinator) {
+            Profile profile = (Profile) event.getPayload();
+            //int s = profile.get
+        }
         while (it.hasNext()) {
             MobileEventListener listener = it.next();
             List<Coordinator> coordinators = coordinatorService.findByUserId(event.getUserId());
@@ -54,8 +60,13 @@ public class MobileEventManager {
         }
     }
 
-    public void invoke(Object source, int userId, int head, Object payload) {
-        MobileEvent event = new MobileEvent(source, userId, head, payload);
-        notifies(event);
+    public void invoke(Object source, int userId, Profile profile) {
+        MobileEvent event = new MobileEvent(source, userId, profile);
+        notifies(event, true);
+    }
+
+    public void invoke(Object source, int userId, Device device) {
+        MobileEvent event = new MobileEvent(source, userId, device);
+        notifies(event, false);
     }
 }

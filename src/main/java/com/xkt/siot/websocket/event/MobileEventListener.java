@@ -2,7 +2,7 @@
  * Copyright 2016 XKT Ltd., Co.
  * Licensed under the Apache License 2.0.
  */
-package com.xkt.siot.mina.event;
+package com.xkt.siot.websocket.event;
 
 import com.xkt.siot.mina.protocol.MobileProtocol;
 import java.util.EventListener;

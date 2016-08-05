@@ -4,7 +4,7 @@
  */
 package com.xkt.siot.mina.handler;
 
-import com.xkt.siot.mina.server.config.ServerSettings;
+import com.xkt.siot.mina.config.ServerSettings;
 import com.xkt.siot.websocket.event.PrintLogEventManager;
 import javax.annotation.Resource;
 import org.apache.mina.core.service.IoHandlerAdapter;

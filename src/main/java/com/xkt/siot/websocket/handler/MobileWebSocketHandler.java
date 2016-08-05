@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.xkt.siot.domain.Device;
 import com.xkt.siot.domain.Profile;
 import com.xkt.siot.mina.event.CoordinatorEventManager;
-import com.xkt.siot.mina.event.MobileEventManager;
+import com.xkt.siot.websocket.event.MobileEventManager;
 import com.xkt.siot.mina.protocol.MinaProtocolHead;
 import com.xkt.siot.mina.protocol.MobileProtocol;
 import javax.annotation.Resource;
@@ -53,12 +53,12 @@ public class MobileWebSocketHandler extends TextWebSocketHandler {
         switch (protocol.getHead()) {
             case MinaProtocolHead.USER_PROFILE_UPDATE: {
                 Profile profile = (Profile) protocol.getPayload();
-                mobileEventManager.invoke(this, userId, protocol.getHead(), profile);
+                mobileEventManager.invoke(this, userId, profile);
                 break;
             }
             case MinaProtocolHead.DEVICE_PROFILE_UPDATE: {
                 Device device = (Device) protocol.getPayload();
-                mobileEventManager.invoke(this, userId, protocol.getHead(), device);
+                mobileEventManager.invoke(this, userId, device);
                 break;
             }
         }

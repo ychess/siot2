@@ -4,7 +4,7 @@
  */
 package com.xkt.siot.mina.client;
 
-import com.xkt.siot.mina.server.config.ServerSettings;
+import com.xkt.siot.mina.config.ServerSettings;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import javax.annotation.Resource;

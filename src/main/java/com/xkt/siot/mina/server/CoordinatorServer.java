@@ -4,7 +4,7 @@
  */
 package com.xkt.siot.mina.server;
 
-import com.xkt.siot.mina.server.config.ServerSettings;
+import com.xkt.siot.mina.config.ServerSettings;
 import com.xkt.siot.mina.codec.CoordinatorCodecFactory;
 import com.xkt.siot.mina.codec.CoordinatorProtocolDecoder;
 import com.xkt.siot.mina.codec.CoordinatorProtocolEncoder;

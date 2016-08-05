@@ -2,7 +2,7 @@
  * Copyright 2016 XKT Ltd., Co.
  * Licensed under the Apache License 2.0.
  */
-package com.xkt.siot.mina.event;
+package com.xkt.siot.websocket.event;
 
 import java.util.EventObject;
 
@@ -17,10 +17,9 @@ public class MobileEvent extends EventObject {
     private int head;
     private Object payload;
 
-    public MobileEvent(Object source, int userId, int head, Object payload) {
+    public MobileEvent(Object source, int userId, Object payload) {
         super(source);
         this.userId = userId;
-        this.head = head;
         this.payload = payload;
     }
 
@@ -30,14 +29,6 @@ public class MobileEvent extends EventObject {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getHead() {
-        return head;
-    }
-
-    public void setHead(int head) {
-        this.head = head;
     }
 
     public Object getPayload() {

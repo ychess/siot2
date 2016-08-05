@@ -2,7 +2,7 @@
  * Copyright 2016 XKT Ltd., Co.
  * Licensed under the Apache License 2.0.
  */
-package com.xkt.siot.mina.server.config;
+package com.xkt.siot.mina.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
